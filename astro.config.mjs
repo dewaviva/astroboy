@@ -9,7 +9,7 @@ import icon from "astro-icon";
 export default defineConfig({
   output: 'server',
   adapter: cloudflare({
-    mode: "advanced", // ✅ wajib untuk menghindari error session
+    mode: "advanced", // ✅ ini wajib buat nonaktifin session binding
   }),
 
   site: "https://akun-gacor.com",
