@@ -7,8 +7,10 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
 export default defineConfig({
-  output: 'server', // <--- ini penting buat SSR
-  adapter: cloudflare(), // <--- ini juga WAJIB biar Cloudflare tau ini SSR
+  output: 'server',
+  adapter: cloudflare({
+    mode: "advanced", // ✅ wajib untuk menghindari error session
+  }),
 
   site: "https://akun-gacor.com",
 
