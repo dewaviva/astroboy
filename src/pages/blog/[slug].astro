@@ -1,0 +1,27 @@
+---
+// src/pages/blog/[slug].astro
+import Layout from "../../layouts/Layout.astro";
+import { APIContext } from "astro";
+
+export async function getStaticPaths() {
+  const res = await fetch("https://tsnlombok.org/wp-json/wp/v2/posts?_limit=100");
+  const posts = await res.json();
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const pageTitle = post.title.rendered;
+const description = post.excerpt.rendered;
+const content = post.content.rendered;
+---
+
+<Layout pageTitle={pageTitle} description={description}>
+  <article class="prose max-w-4xl mx-auto p-8">
+    <h1 innerHTML={pageTitle} />
+    <div innerHTML={content} />
+  </article>
+</Layout>
