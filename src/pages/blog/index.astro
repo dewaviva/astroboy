@@ -2,21 +2,31 @@
 import Layout from "../../layouts/Layout.astro";
 import Hero from "../../components/blog/Hero.astro";
 import Tags from "../../components/blog/Tags.astro";
-import ListPosts from "../../components/blog/ListPosts.astro";
+
 const pageTitle = "Web Development and Technology Blog | Fernando López | EFEELE";
 const description = "Welcome to my blog, where I share my passion for frontend development, web design, and the latest technology trends.";
-const ogimage ={
-    url: "/images/blogimage.webp",
-    alt: "EFEELE.dev logo with green background and light effect. Text: 'Web Development and Technology Blog' and URL 'www.efeele.dev'."
+const ogimage = {
+  url: "/images/blogimage.webp",
+  alt: "EFEELE.dev logo with green background and light effect. Text: 'Web Development and Technology Blog' and URL 'www.efeele.dev'."
 };
+
+// Fetch posts from WordPress REST API
+const res = await fetch("https://tsnlombok.org//wp-json/wp/v2/posts");
+const posts = await res.json();
 ---
 
-<Layout  pageTitle={pageTitle} description={description} ogimage={ogimage}>
-   
-    <Hero />
-    <Tags />
-    <div class="px-8 max-sm:px-4">
-        <ListPosts />
-    </div>
+<Layout pageTitle={pageTitle} description={description} ogimage={ogimage}>
+  <Hero />
+  <Tags />
 
+  <div class="px-8 max-sm:px-4 space-y-8">
+    {posts.map(post => (
+      <article>
+        <h2 class="text-xl font-semibold">
+          <a href={`/blog/${post.slug}`}>{post.title.rendered}</a>
+        </h2>
+        <div class="text-gray-600 text-sm" innerHTML={post.excerpt.rendered}></div>
+      </article>
+    ))}
+  </div>
 </Layout>
