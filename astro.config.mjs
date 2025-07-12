@@ -9,7 +9,11 @@ import icon from "astro-icon";
 export default defineConfig({
   output: 'server',
   adapter: cloudflare({
+<<<<<<< HEAD
     mode: "advanced", // ✅ ini wajib buat nonaktifin session binding
+=======
+    mode: 'advanced', // ⚠️ Ini WAJIB ADA dan harus di dalam objek
+>>>>>>> dddf9fe (fix: benerin session binding cloudflare adapter)
   }),
 
   site: "https://akun-gacor.com",
